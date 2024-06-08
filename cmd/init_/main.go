@@ -1,19 +1,21 @@
-package main
+package init_
 
 import (
 	"fmt"
 	"os"
+
+	pkg "github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
 
-func InitCommandHandler() {
-	for _, dir := range []string{".git", ".git/objects", ".git/refs"} {
+func CommandHandler_Init(initParam string) {
+	for _, dir := range []string{pkg.DOT_GIT, pkg.DOT_GIT_OBJECTS, pkg.DOT_GIT_REFS} {
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			fmt.Fprintf(os.Stderr, "Error creating directory: %s\n", err)
 		}
 	}
 
 	headFileContents := []byte("ref: refs/heads/main\n")
-	if err := os.WriteFile(".git/HEAD", headFileContents, 0644); err != nil {
+	if err := os.WriteFile(pkg.DOT_GIT_HEAD, headFileContents, 0644); err != nil {
 		fmt.Fprintf(os.Stderr, "Error writing file: %s\n", err)
 	}
 
