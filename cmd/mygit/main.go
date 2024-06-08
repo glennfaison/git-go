@@ -17,12 +17,9 @@ func main() {
 
 	switch command := os.Args[1]; command {
 	case "init":
-		initParam := os.Args[2]
-		init_.CommandHandler_Init(initParam)
+		init_.CommandHandler_Init()
 	case "cat-file":
-		catFileParam := os.Args[3]
-		cat_file.CommandHandler_CatFile(catFileParam)
-
+		cat_file.CommandHandler_CatFile()
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)
