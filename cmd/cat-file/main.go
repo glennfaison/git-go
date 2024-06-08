@@ -42,6 +42,6 @@ func CommandHandler_CatFile() {
 func CheckError(err error) {
 	if err != nil {
 		fmt.Println(err.Error())
-		return
+		os.Exit(0)
 	}
 }
