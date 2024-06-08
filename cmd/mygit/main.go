@@ -20,7 +20,7 @@ func main() {
 		initParam := os.Args[2]
 		init_.CommandHandler_Init(initParam)
 	case "cat-file":
-		catFileParam := os.Args[2]
+		catFileParam := os.Args[3]
 		cat_file.CommandHandler_CatFile(catFileParam)
 
 	default:
