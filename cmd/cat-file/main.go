@@ -24,7 +24,7 @@ func PrintCmd(blob_sha string) {
 	}
 
 	// Print the output
-	fmt.Println("pwd ->", strings.Split(string(stdout), " "))
+	fmt.Println("pwd ->", string(stdout), strings.Split(string(stdout), " "))
 
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
 	println("before OpenFile")
