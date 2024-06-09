@@ -14,10 +14,10 @@ func main() {
 	flag.Parse()
 	args := flag.Args()
 
-	fmt.Printf("%v\n", os.Args)
-	for i, arg := range args {
-		println(arg, i)
-	}
+	// fmt.Printf("%v\n", os.Args)
+	// for i, arg := range args {
+	// 	println(arg, i)
+	// }
 
 	if len(args) < 1 {
 		fmt.Fprintf(os.Stderr, "usage: mygit <command> [<args>...]\n")
