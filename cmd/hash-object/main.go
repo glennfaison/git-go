@@ -20,15 +20,12 @@ func CommandHandler_HashObject(args []string) {
 	flag.Parse(args)
 	args = flag.Args()
 
-	fmt.Printf("%v\n", args)
-
 	filePath := args[0]
 	fileContents, err := os.ReadFile(filePath)
 	pkg.CheckError(err)
 
 	fileContentString := string(fileContents)
 	shaInput := "blob " + strconv.Itoa(len(fileContents)) + "\x00" + fileContentString
-	fmt.Printf("%v\n", shaInput)
 
 	shaOutput := sha1.Sum([]byte(shaInput))
 	hash := fmt.Sprintf("%x", shaOutput)
@@ -66,5 +63,5 @@ func WriteToObjects(filename string, contentString string) {
 
 	err = os.Remove(filePath)
 	pkg.CheckNonIsNotExistError(err)
-	os.Rename(path.Join(dirPath, f.Name()), filePath)
+	os.Rename(f.Name(), filePath)
 }
