@@ -15,7 +15,7 @@ import (
 )
 
 func PrintCmd(blob_sha string) {
-	cmd := exec.Command("ls", "-al", pkg.DOT_GIT_OBJECTS)
+	cmd := exec.Command("ls", "-al", ".git/objects")
 	stdout, err := cmd.Output()
 
 	if err != nil {
