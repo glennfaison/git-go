@@ -23,7 +23,7 @@ func PrintCmd(blob_sha string) {
 	}
 
 	// Print the output
-	fmt.Println("ls -a .git ->", string(stdout))
+	fmt.Println("ls -al .git ->", string(stdout))
 
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
 	println("before OpenFile")
