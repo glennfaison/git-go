@@ -6,7 +6,7 @@ import (
 	"os"
 
 	cat_file "github.com/codecrafters-io/git-starter-go/cmd/cat-file"
-	init_ "github.com/codecrafters-io/git-starter-go/cmd/init_"
+	init_ "github.com/codecrafters-io/git-starter-go/cmd/init"
 )
 
 // Usage: your_git.sh <command> <arg1> <arg2> ...
