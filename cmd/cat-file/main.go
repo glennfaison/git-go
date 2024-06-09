@@ -14,6 +14,7 @@ import (
 
 func PrintCmd(blob_sha string) {
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
+	println("before OpenFile")
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
 	CheckError(err)
 	println("after OpenFile")
