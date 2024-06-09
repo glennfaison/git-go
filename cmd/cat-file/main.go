@@ -1,13 +1,13 @@
 package cat_file
 
 import (
-	"bytes"
 	"compress/zlib"
 	"flag"
 	"fmt"
 	"io"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
@@ -36,11 +36,10 @@ func PrintCmd(blob_sha string) {
 	blob_bytes, err := io.ReadAll(zlibReader)
 	CheckError(err)
 
-	nullByteIndex := bytes.Index(blob_bytes, []byte("\x00"))
 	blob_string := string(blob_bytes)
-	// fmt.Println("blob_string:", blob_string)
+	nullByteIndex := strings.Index(blob_string, "\x00")
 	if nullByteIndex != -1 {
-		blob_string = string(blob_bytes[nullByteIndex:])
+		blob_string = blob_string[nullByteIndex:]
 	}
 	fmt.Print(blob_string)
 }
