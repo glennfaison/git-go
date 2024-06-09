@@ -12,7 +12,7 @@ import (
 	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
 
-func Print(blob_sha string) {
+func PrintCmd(blob_sha string) {
 	// pwd, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	// pwd, err := os.Getwd()
 	// CheckError(err)
@@ -43,7 +43,7 @@ func CommandHandler_CatFile(args []string) {
 
 	switch {
 	case blob_path != nil:
-		Print(*blob_path)
+		PrintCmd(*blob_path)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", args[0])
 	}
