@@ -35,9 +35,8 @@ func PrintCmd(blob_sha string) {
 	defer zlibReader.Close()
 	blob_bytes, err := io.ReadAll(zlibReader)
 	CheckError(err)
-	// println(string(blob_bytes))
 
-	nullByteIndex := bytes.Index(blob_bytes, []byte("\x00"))
+	nullByteIndex := bytes.Index(blob_bytes, []byte("0"))
 	blob_string := string(blob_bytes)
 	fmt.Println("blob_string:", blob_string)
 	if nullByteIndex != -1 {
