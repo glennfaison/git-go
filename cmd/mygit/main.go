@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 
@@ -10,16 +11,22 @@ import (
 
 // Usage: your_git.sh <command> <arg1> <arg2> ...
 func main() {
-	if len(os.Args) < 2 {
+	flag.Parse()
+	args := flag.Args()
+	// for i, arg := range args {
+	// 	println(arg, i)
+	// }
+	if len(args) < 1 {
 		fmt.Fprintf(os.Stderr, "usage: mygit <command> [<args>...]\n")
 		os.Exit(1)
 	}
+	command, newArgs := args[0], args[1:]
 
-	switch command := os.Args[1]; command {
+	switch command {
 	case "init":
-		init_.CommandHandler_Init()
+		init_.CommandHandler_Init(newArgs)
 	case "cat-file":
-		cat_file.CommandHandler_CatFile()
+		cat_file.CommandHandler_CatFile(newArgs)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)

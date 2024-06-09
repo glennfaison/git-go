@@ -3,6 +3,7 @@ package cat_file
 import (
 	"bytes"
 	"compress/zlib"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -28,13 +29,18 @@ func P(blob_sha string) {
 	println(blob_string)
 }
 
-func CommandHandler_CatFile() {
-	switch command := os.Args[2]; command {
-	case "-p":
-		blob_sha := os.Args[3]
-		P(blob_sha)
+func CommandHandler_CatFile(args []string) {
+	fmt.Printf("%v\n", args)
+	flag := flag.NewFlagSet("mygit cat-file", flag.ExitOnError)
+	blob_path := flag.String("p", "", "name of the blob file")
+	flag.Parse(args)
+	args = flag.Args()
+
+	switch {
+	case blob_path != nil:
+		P(*blob_path)
 	default:
-		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
+		fmt.Fprintf(os.Stderr, "Unknown command %s\n", args[0])
 	}
 
 }
