@@ -31,7 +31,7 @@ func CommandHandler_HashObject(args []string) {
 	hash := fmt.Sprintf("%x", shaOutput)
 
 	// Perform the key requirement of the `hash-object` command: print the SHA.
-	fmt.Print(hash)
+	fmt.Printf("%s", hash)
 
 	if write != nil {
 		WriteToObjects(hash, shaInput)
