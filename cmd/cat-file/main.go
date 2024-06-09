@@ -12,8 +12,10 @@ import (
 	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
 
-func P(blob_sha string) {
-	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
+func Print(blob_sha string) {
+	pwd, err := os.Getwd()
+	CheckError(err)
+	blob_filename := path.Join(pwd, pkg.DOT_GIT_OBJECTS, blob_sha)
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
 	CheckError(err)
 	zlibReader, err := zlib.NewReader(io.Reader(blob_file))
@@ -38,7 +40,7 @@ func CommandHandler_CatFile(args []string) {
 
 	switch {
 	case blob_path != nil:
-		P(*blob_path)
+		Print(*blob_path)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", args[0])
 	}
