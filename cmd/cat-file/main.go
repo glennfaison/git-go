@@ -52,7 +52,7 @@ func CommandHandler_CatFile(args []string) {
 
 func CheckError(err error) {
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", err.Error())
 		os.Exit(0)
 	}
 }
