@@ -39,7 +39,7 @@ func PrintCmd(blob_sha string) {
 
 	nullByteIndex := bytes.Index(blob_bytes, []byte("\x00"))
 	blob_string := string(blob_bytes)
-	println("blob_string:", blob_string)
+	fmt.Println("blob_string:", blob_string)
 	if nullByteIndex != -1 {
 		blob_string = string(blob_bytes[nullByteIndex:])
 	}
