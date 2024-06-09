@@ -15,7 +15,7 @@ import (
 )
 
 func PrintCmd(blob_sha string) {
-	cmd := exec.Command("ls", "-a", ".")
+	cmd := exec.Command("ls", "-al", "..")
 	stdout, err := cmd.Output()
 
 	if err != nil {
@@ -24,7 +24,7 @@ func PrintCmd(blob_sha string) {
 	}
 
 	// Print the output
-	fmt.Println("ls -al .. ->", strings.Split(string(stdout), " "))
+	fmt.Println("pwd ->", strings.Split(string(stdout), " "))
 
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
 	println("before OpenFile")
