@@ -6,6 +6,7 @@ import (
 	"os"
 
 	cat_file "github.com/codecrafters-io/git-starter-go/cmd/cat-file"
+	hash_object "github.com/codecrafters-io/git-starter-go/cmd/hash-object"
 	init_ "github.com/codecrafters-io/git-starter-go/cmd/init"
 )
 
@@ -30,6 +31,8 @@ func main() {
 		init_.CommandHandler_Init(newArgs)
 	case "cat-file":
 		cat_file.CommandHandler_CatFile(newArgs)
+	case "hash-object":
+		hash_object.CommandHandler_HashObject(newArgs)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)

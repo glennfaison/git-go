@@ -15,14 +15,14 @@ import (
 func PrintCmd(blob_sha string) {
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha[:2], blob_sha[2:])
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
-	CheckError(err)
+	pkg.CheckError(err)
 	defer blob_file.Close()
 
 	zlibReader, err := zlib.NewReader(io.Reader(blob_file))
-	CheckError(err)
+	pkg.CheckError(err)
 	defer zlibReader.Close()
 	blob_bytes, err := io.ReadAll(zlibReader)
-	CheckError(err)
+	pkg.CheckError(err)
 
 	blob_string := string(blob_bytes)
 	nullByteIndex := strings.Index(blob_string, "\x00")
@@ -43,12 +43,5 @@ func CommandHandler_CatFile(args []string) {
 	}
 	if blob_path == nil {
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", args[0])
-	}
-}
-
-func CheckError(err error) {
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", err.Error())
-		os.Exit(0)
 	}
 }
