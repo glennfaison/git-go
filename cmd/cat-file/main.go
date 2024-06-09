@@ -13,8 +13,11 @@ import (
 )
 
 func Print(blob_sha string) {
-	pwd, err := os.Getwd()
-	CheckError(err)
+	// pwd, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	// pwd, err := os.Getwd()
+	// CheckError(err)
+	pwd := "./"
+	println("pwd", pwd)
 	blob_filename := path.Join(pwd, pkg.DOT_GIT_OBJECTS, blob_sha)
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
 	CheckError(err)
