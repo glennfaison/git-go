@@ -38,11 +38,11 @@ func PrintCmd(blob_sha string) {
 
 	nullByteIndex := bytes.Index(blob_bytes, []byte("0"))
 	blob_string := string(blob_bytes)
-	fmt.Println("blob_string:", blob_string)
+	// fmt.Println("blob_string:", blob_string)
 	if nullByteIndex != -1 {
 		blob_string = string(blob_bytes[nullByteIndex:])
 	}
-	println(blob_string)
+	fmt.Println(blob_string)
 }
 
 func CommandHandler_CatFile(args []string) {
