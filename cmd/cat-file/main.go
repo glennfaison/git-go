@@ -7,12 +7,24 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path"
 
 	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
 
 func PrintCmd(blob_sha string) {
+	cmd := exec.Command("ls", "-a", ".")
+	stdout, err := cmd.Output()
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Print the output
+	fmt.Println(string(stdout))
+
 	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha)
 	println("before OpenFile")
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
