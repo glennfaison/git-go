@@ -12,14 +12,14 @@ const DOT_GIT_HEAD = ".git/HEAD"
 
 func CheckError(err error) {
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(0)
 	}
 }
 
 func CheckNonIsNotExistError(err error) {
 	if err != nil && !os.IsNotExist(err) {
-		fmt.Fprintf(os.Stderr, "Unknown command: %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		os.Exit(0)
 	}
 }
