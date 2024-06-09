@@ -14,7 +14,7 @@ import (
 )
 
 func PrintCmd(blob_sha string) {
-	cmd := exec.Command("ls", "-al", ".git/objects")
+	cmd := exec.Command("ls", "-al", ".git/")
 	stdout, err := cmd.Output()
 
 	if err != nil {
