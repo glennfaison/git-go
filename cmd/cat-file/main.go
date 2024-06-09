@@ -17,9 +17,11 @@ func PrintCmd(blob_sha string) {
 	println("before OpenFile")
 	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
 	CheckError(err)
+	defer blob_file.Close()
 	println("after OpenFile")
 	zlibReader, err := zlib.NewReader(io.Reader(blob_file))
 	CheckError(err)
+	defer zlibReader.Close()
 	blob_bytes, err := io.ReadAll(zlibReader)
 	CheckError(err)
 
