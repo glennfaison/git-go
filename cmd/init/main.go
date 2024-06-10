@@ -5,7 +5,7 @@ import (
 	"os"
 	"path"
 
-	pkg "github.com/codecrafters-io/git-starter-go/cmd/pkg"
+	pkg "github.com/codecrafters-io/git-starter-go/pkg"
 )
 
 func CommandHandler_Init(args []string) {

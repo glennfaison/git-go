@@ -7,7 +7,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
+	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
 func CommandHandler_HashObject(args []string) {

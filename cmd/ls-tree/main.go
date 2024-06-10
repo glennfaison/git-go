@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
+	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
 func CommandHandler_LsTree(args []string) {

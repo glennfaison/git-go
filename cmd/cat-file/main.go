@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
+	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
 func PrintCmd(blob_sha string) {
