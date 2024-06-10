@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	cat_file "github.com/codecrafters-io/git-starter-go/cmd/cat-file"
-	hash_object "github.com/codecrafters-io/git-starter-go/cmd/hash-object"
-	init_ "github.com/codecrafters-io/git-starter-go/cmd/init"
-	ls_tree "github.com/codecrafters-io/git-starter-go/cmd/ls-tree"
+	cat_file "github.com/codecrafters-io/git-starter-go/pkg/cat-file"
+	hash_object "github.com/codecrafters-io/git-starter-go/pkg/hash-object"
+	init_ "github.com/codecrafters-io/git-starter-go/pkg/init"
+	ls_tree "github.com/codecrafters-io/git-starter-go/pkg/ls-tree"
 )
 
 // Usage: your_git.sh <command> <arg1> <arg2> ...
@@ -22,7 +22,7 @@ func main() {
 	// }
 
 	if len(args) < 1 {
-		fmt.Fprintf(os.Stderr, "usage: git-go <command> [<args>...]\n")
+		fmt.Fprintf(os.Stderr, "usage: mygit <command> [<args>...]\n")
 		os.Exit(1)
 	}
 	command, newArgs := args[0], args[1:]
