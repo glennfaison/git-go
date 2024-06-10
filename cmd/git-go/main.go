@@ -22,7 +22,7 @@ func main() {
 	// }
 
 	if len(args) < 1 {
-		fmt.Fprintf(os.Stderr, "usage: mygit <command> [<args>...]\n")
+		fmt.Fprintf(os.Stderr, "usage: git-go <command> [<args>...]\n")
 		os.Exit(1)
 	}
 	command, newArgs := args[0], args[1:]
