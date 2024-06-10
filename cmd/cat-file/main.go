@@ -1,30 +1,17 @@
 package cat_file
 
 import (
-	"compress/zlib"
 	"flag"
 	"fmt"
-	"io"
 	"os"
-	"path"
 	"strings"
 
 	"github.com/codecrafters-io/git-starter-go/cmd/pkg"
 )
 
 func PrintCmd(blob_sha string) {
-	blob_filename := path.Join(pkg.DOT_GIT_OBJECTS, blob_sha[:2], blob_sha[2:])
-	blob_file, err := os.OpenFile(blob_filename, os.O_RDONLY, 0644)
+	blob_string, err := pkg.GetContentFromObject(blob_sha)
 	pkg.CheckError(err)
-	defer blob_file.Close()
-
-	zlibReader, err := zlib.NewReader(io.Reader(blob_file))
-	pkg.CheckError(err)
-	defer zlibReader.Close()
-	blob_bytes, err := io.ReadAll(zlibReader)
-	pkg.CheckError(err)
-
-	blob_string := string(blob_bytes)
 	nullByteIndex := strings.Index(blob_string, "\x00")
 	if nullByteIndex != -1 {
 		blob_string = blob_string[nullByteIndex+1:]

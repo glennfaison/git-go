@@ -8,6 +8,7 @@ import (
 	cat_file "github.com/codecrafters-io/git-starter-go/cmd/cat-file"
 	hash_object "github.com/codecrafters-io/git-starter-go/cmd/hash-object"
 	init_ "github.com/codecrafters-io/git-starter-go/cmd/init"
+	ls_tree "github.com/codecrafters-io/git-starter-go/cmd/ls-tree"
 )
 
 // Usage: your_git.sh <command> <arg1> <arg2> ...
@@ -33,6 +34,8 @@ func main() {
 		cat_file.CommandHandler_CatFile(newArgs)
 	case "hash-object":
 		hash_object.CommandHandler_HashObject(newArgs)
+	case "ls-tree":
+		ls_tree.CommandHandler_LsTree(newArgs)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)
