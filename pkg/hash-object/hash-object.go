@@ -29,7 +29,7 @@ func CommandHandler_HashObject(args []string) {
 	// Perform the key requirement of the `hash-object` command: print the SHA.
 	fmt.Printf("%s", hash)
 
-	if write != nil {
+	if write != nil && *write {
 		pkg.WriteToObjects(hash, shaInput)
 	}
 }
