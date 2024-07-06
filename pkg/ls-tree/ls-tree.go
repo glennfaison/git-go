@@ -14,6 +14,7 @@ func CommandHandler_LsTree(args []string) {
 	args = flag.Args()
 	tree_sha := args[0]
 
+	fmt.Printf("\"GOT FILE CONTENT!\": %v\n", "GOT FILE CONTENT!")
 	file_content, err := pkg.ReadObjectFile(tree_sha)
 	pkg.CheckError(err)
 
@@ -24,7 +25,7 @@ func CommandHandler_LsTree(args []string) {
 		for _, entry := range entries {
 			outputString += fmt.Sprintf("%s %s\t%s\n", entry.Mode, entry.Name, entry.ShaAs20Bytes)
 		}
-		fmt.Print(outputString)
+		fmt.Printf("outputString: %v\n", outputString)
 		return
 	}
 
