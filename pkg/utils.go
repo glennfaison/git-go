@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"path"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -143,7 +144,11 @@ func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
 		startIndex = endIndex
 
 		// Append the entry we just read.
-		entries = append(entries, TreeObjectEntry{Mode: mode, Name: name, ShaAs20Bytes: hashString})
+		objectType := "blob"
+		if mode == "040000" {
+			objectType = "tree"
+		}
+		entries = append(entries, TreeObjectEntry{Mode: mode, Type: objectType, Name: name, ShaAs20Bytes: hashString})
 	}
 	return entries
 }
@@ -152,6 +157,7 @@ type TreeObjectEntry struct {
 	Mode         string
 	Name         string
 	ShaAs20Bytes string
+	Type         string
 }
 
 func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []byte, error) {
@@ -160,28 +166,34 @@ func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []by
 		return [20]byte{}, nil, err
 	}
 
+	ignoredDirectories := []string{".git"}
 	treeObjEntries := []TreeObjectEntry{}
 	for _, dirEntry := range dirEntries {
 		filename := path.Join(dir, dirEntry.Name())
-		if filename == ".git" {
+		if slices.Contains(ignoredDirectories, filename) {
 			continue
 		}
-		if dirEntry.IsDir() {
-			checksum, _, err := ComputeTreeObjectForDirectory(filename, writeToFile)
-			if err != nil {
-				return [20]byte{}, nil, err
-			}
 
-			item := TreeObjectEntry{"040000", dirEntry.Name(), string(checksum[:])}
-			treeObjEntries = append(treeObjEntries, item)
-			continue
+		var checksum [20]byte
+		var content []byte
+		var err error
+		var item TreeObjectEntry = TreeObjectEntry{}
+		if dirEntry.IsDir() {
+			item = TreeObjectEntry{Mode: "040000", Type: "tree", Name: dirEntry.Name(), ShaAs20Bytes: string(checksum[:])}
+			checksum, content, err = ComputeTreeObjectForDirectory(filename, writeToFile)
+		} else {
+			item = TreeObjectEntry{Mode: "100644", Type: "blob", Name: dirEntry.Name(), ShaAs20Bytes: string(checksum[:])}
+			checksum, content, err = ComputeBlobObjectForFile(filename)
 		}
-		checksum, _, err := ComputeBlobObjectForFile(filename)
 		if err != nil {
 			return [20]byte{}, nil, err
 		}
+		item.Name = dirEntry.Name()
+		item.ShaAs20Bytes = string(checksum[:])
 
-		item := TreeObjectEntry{"100644", dirEntry.Name(), string(checksum[:])}
+		if writeToFile {
+			WriteObjectFile(fmt.Sprintf("%x", checksum), content)
+		}
 		treeObjEntries = append(treeObjEntries, item)
 	}
 
@@ -190,7 +202,8 @@ func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []by
 	})
 	body := []byte{}
 	for _, treeObjEntry := range treeObjEntries {
-		body = append(body, treeObjEntry.ShaAs20Bytes...)
+		entryTemplate := fmt.Sprintf("%s %s\x00%s", treeObjEntry.Mode, treeObjEntry.Name, treeObjEntry.ShaAs20Bytes)
+		body = append(body, []byte(entryTemplate)...)
 	}
 
 	header := fmt.Sprintf("tree %d\x00", len(body))

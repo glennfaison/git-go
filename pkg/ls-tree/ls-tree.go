@@ -30,7 +30,7 @@ func CommandHandler_LsTree(args []string) {
 
 	outputString := ""
 	for _, entry := range entries {
-		outputString += fmt.Sprintf("%s %s\t%s\n", entry.Mode, entry.Name, entry.ShaAs20Bytes)
+		outputString += fmt.Sprintf("%s %s %x\t%s\n", entry.Mode, entry.Type, entry.ShaAs20Bytes, entry.Name)
 	}
 	fmt.Print(outputString)
 }
