@@ -1,4 +1,4 @@
-package cat_file
+package command_handlers
 
 import (
 	"flag"

@@ -1,4 +1,4 @@
-package ls_tree
+package command_handlers
 
 import (
 	"reflect"

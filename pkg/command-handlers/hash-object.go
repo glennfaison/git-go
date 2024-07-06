@@ -1,4 +1,4 @@
-package hash_object
+package command_handlers
 
 import (
 	"flag"
