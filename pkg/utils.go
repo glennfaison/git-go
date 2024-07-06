@@ -105,6 +105,7 @@ func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
 	if firstNullByteIndex > 0 {
 		body = file_content[firstNullByteIndex+1:]
 	}
+	fmt.Printf("\"GOT FILE CONTENT!\": ||||%s||||\n", file_content)
 
 	// RegExp for repeated sequences of `(040000 folder1\x007f21f4d392c2d79987c1)(100644 file1\x00d51d366274410103d3ec)...`
 	bodyRegExp := regexp.MustCompile("(\\d+) ([^\x00]+)\x00(\\w{20})")
