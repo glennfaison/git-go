@@ -10,7 +10,7 @@ import (
 )
 
 func PrintCmd(blob_sha string) {
-	blob_string, err := pkg.GetContentFromObject(blob_sha)
+	blob_string, err := pkg.ReadObjectFile(blob_sha)
 	pkg.CheckError(err)
 	nullByteIndex := strings.Index(blob_string, "\x00")
 	if nullByteIndex != -1 {

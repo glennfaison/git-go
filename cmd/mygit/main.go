@@ -9,6 +9,7 @@ import (
 	hash_object "github.com/codecrafters-io/git-starter-go/pkg/hash-object"
 	init_ "github.com/codecrafters-io/git-starter-go/pkg/init"
 	ls_tree "github.com/codecrafters-io/git-starter-go/pkg/ls-tree"
+	write_tree "github.com/codecrafters-io/git-starter-go/pkg/write-tree"
 )
 
 // Usage: your_git.sh <command> <arg1> <arg2> ...
@@ -31,6 +32,8 @@ func main() {
 		hash_object.CommandHandler_HashObject(newArgs)
 	case "ls-tree":
 		ls_tree.CommandHandler_LsTree(newArgs)
+	case "write-tree":
+		write_tree.CommandHandler_WriteTree(newArgs)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)
