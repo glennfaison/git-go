@@ -43,13 +43,13 @@ func TestParseTreeObjectFromString(t *testing.T) {
 			},
 			want: []pkg.TreeObjectEntry{
 				{
-					Mode: "040000", Name: "donkey", ShaAs20Bytes: "7f21f4d392c2d79987c1",
+					Mode: "040000", Name: "donkey", ShaAs20Bytes: "\x04\xac\x17ͱ\xe4?\x06\x02\xae\xd4Xoc\xd8p\xb3t\xc7\a",
 				},
 				{
-					Mode: "100644", Name: "horsey", ShaAs20Bytes: "d51d366274410103d3ec",
+					Mode: "100644", Name: "horsey", ShaAs20Bytes: "=\u03a2\x116\xec\x14ʊ\xf3\xabG\xa0z'ȜK\xe8\xaf",
 				},
 				{
-					Mode: "040000", Name: "yikes", ShaAs20Bytes: "9f94e0d364e0ea74f579",
+					Mode: "040000", Name: "yikes", ShaAs20Bytes: "D\xb1\"t\xdd\x13^J\xcd%\xe8@h^\xb4\xf8\xdaO\xbaI",
 				},
 			},
 		},

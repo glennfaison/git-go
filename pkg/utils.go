@@ -101,49 +101,47 @@ func ComputeBlobObjectForFile(filePath string) ([20]byte, []byte, error) {
 }
 
 func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
-	fmt.Println("MATCHES: ", "mode, name, hashString")
-	file_bytes := []byte(file_content)
-	previousIndex, currentIndex := 0, 0
+	byteSlice := []byte(file_content)
+	startIndex, endIndex := 0, 0
 
 	// Read the "tree" prefix.
-	currentIndex = bytes.IndexByte(file_bytes, byte(' '))
-	if string(file_bytes[previousIndex:currentIndex+1]) != "tree" {
+	endIndex = bytes.IndexByte(byteSlice, byte(' '))
+	if string(byteSlice[startIndex:endIndex]) != "tree" {
 		return nil
 	}
-	previousIndex = currentIndex + 1
+	startIndex = endIndex + 1
 
 	// Read the file size.
-	currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(0))
-	_, err := strconv.Atoi(string(file_bytes[previousIndex:currentIndex]))
+	endIndex = startIndex + bytes.IndexByte(byteSlice[startIndex:], byte(0))
+	_, err := strconv.Atoi(string(byteSlice[startIndex:endIndex]))
 	if err != nil {
 		return nil
 	}
-	previousIndex = currentIndex + 1
-	currentIndex = currentIndex + 1
+	startIndex = endIndex + 1
 
 	entries := []TreeObjectEntry{}
-	length := len(file_bytes[currentIndex:])
-	for i := currentIndex; i < length; i++ {
+	length := len(byteSlice[startIndex:])
+	for endIndex <= length {
 		// Read the Mode (a number).
-		currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(' '))
-		mode := string(file_bytes[previousIndex:currentIndex])
+		endIndex = startIndex + bytes.IndexByte(byteSlice[startIndex:], byte(' '))
+		mode := string(byteSlice[startIndex:endIndex])
+		mode = fmt.Sprintf("%06s", mode)
 		_, err := strconv.Atoi(mode)
 		if err != nil {
 			return nil
 		}
-		previousIndex = currentIndex + 1
+		startIndex = endIndex + 1
 
 		// Read the Name (a string).
-		currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(0))
-		name := string(file_bytes[previousIndex:currentIndex])
-		previousIndex = currentIndex + 1
+		endIndex = startIndex + bytes.IndexByte(byteSlice[startIndex:], byte(0))
+		name := string(byteSlice[startIndex:endIndex])
+		startIndex = endIndex + 1
 
 		// Read the 20-byte-long hash (a string).
-		currentIndex = currentIndex + 21
-		hashString := string(file_bytes[previousIndex:currentIndex])
-		previousIndex = currentIndex
+		endIndex = startIndex + 20
+		hashString := string(byteSlice[startIndex:endIndex])
+		startIndex = endIndex
 
-		fmt.Println("MATCHES: ", mode, name, hashString)
 		// Append the entry we just read.
 		entries = append(entries, TreeObjectEntry{Mode: mode, Name: name, ShaAs20Bytes: hashString})
 	}
