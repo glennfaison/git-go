@@ -25,7 +25,6 @@ func CommandHandler_LsTree(args []string) {
 		for _, entry := range entries {
 			outputString += fmt.Sprintf("%s %s\t%s\n", entry.Mode, entry.Name, entry.ShaAs20Bytes)
 		}
-		fmt.Printf("outputString: %v\n", outputString)
 		return
 	}
 

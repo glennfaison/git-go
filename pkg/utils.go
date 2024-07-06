@@ -1,14 +1,15 @@
 package pkg
 
 import (
+	"bytes"
 	"compress/zlib"
 	"crypto/sha1"
 	"fmt"
 	"io"
 	"os"
 	"path"
-	"regexp"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -100,21 +101,50 @@ func ComputeBlobObjectForFile(filePath string) ([20]byte, []byte, error) {
 }
 
 func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
-	firstNullByteIndex := strings.Index(file_content, "\x00")
-	body := ""
-	if firstNullByteIndex > 0 {
-		body = file_content[firstNullByteIndex+1:]
-	}
-	fmt.Printf("\"GOT FILE CONTENT!\": ||||%s||||\n", file_content)
+	file_bytes := []byte(file_content)
+	previousIndex, currentIndex := 0, 0
 
-	// RegExp for repeated sequences of `(040000 folder1\x007f21f4d392c2d79987c1)(100644 file1\x00d51d366274410103d3ec)...`
-	bodyRegExp := regexp.MustCompile("(\\d+) ([^\x00]+)\x00(\\w{20})")
-	matches := bodyRegExp.FindAllStringSubmatch(body, -1)
+	// Read the "tree" prefix.
+	currentIndex = bytes.IndexByte(file_bytes, byte(' '))
+	if string(file_bytes[previousIndex:currentIndex+1]) != "tree" {
+		return nil
+	}
+	previousIndex = currentIndex + 1
+
+	// Read the file size.
+	currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(0))
+	_, err := strconv.Atoi(string(file_bytes[previousIndex:currentIndex]))
+	if err != nil {
+		return nil
+	}
+	previousIndex = currentIndex + 1
+	currentIndex = currentIndex + 1
+
 	entries := []TreeObjectEntry{}
-	for _, value := range matches {
-		mode, name, _20byteSha := value[1], value[2], value[3]
-		fmt.Println(mode, name, _20byteSha)
-		entries = append(entries, TreeObjectEntry{Mode: mode, Name: name, ShaAs20Bytes: _20byteSha})
+	length := len(file_bytes[currentIndex:])
+	for i := currentIndex; i < length; i++ {
+		// Read the Mode (a number).
+		currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(' '))
+		mode := string(file_bytes[previousIndex:currentIndex])
+		_, err := strconv.Atoi(mode)
+		if err != nil {
+			return nil
+		}
+		previousIndex = currentIndex + 1
+
+		// Read the Name (a string).
+		currentIndex = bytes.IndexByte(file_bytes[previousIndex:], byte(0))
+		name := string(file_bytes[previousIndex:currentIndex])
+		previousIndex = currentIndex + 1
+
+		// Read the 20-byte-long hash (a string).
+		currentIndex = currentIndex + 21
+		hashString := string(file_bytes[previousIndex:currentIndex])
+		previousIndex = currentIndex
+
+		fmt.Println("MATCHES: ", mode, name, hashString)
+		// Append the entry we just read.
+		entries = append(entries, TreeObjectEntry{Mode: mode, Name: name, ShaAs20Bytes: hashString})
 	}
 	return entries
 }
