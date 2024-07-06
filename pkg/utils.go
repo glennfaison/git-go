@@ -107,12 +107,13 @@ func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
 	}
 
 	// RegExp for repeated sequences of `(040000 folder1\x007f21f4d392c2d79987c1)(100644 file1\x00d51d366274410103d3ec)...`
-	bodyRegExp := regexp.MustCompile("(\\d{6}) ([^\x00]+)\x00(\\w{20})")
+	bodyRegExp := regexp.MustCompile("(\\d+) ([^\x00]+)\x00(\\w{20})")
 	matches := bodyRegExp.FindAllStringSubmatch(body, -1)
 	entries := []TreeObjectEntry{}
 	for _, value := range matches {
 		mode, name, _20byteSha := value[1], value[2], value[3]
-		entries = append(entries, TreeObjectEntry{mode, name, _20byteSha})
+		fmt.Println(mode, name, _20byteSha)
+		entries = append(entries, TreeObjectEntry{Mode: mode, Name: name, ShaAs20Bytes: _20byteSha})
 	}
 	return entries
 }
