@@ -101,6 +101,7 @@ func ComputeBlobObjectForFile(filePath string) ([20]byte, []byte, error) {
 }
 
 func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
+	fmt.Println("MATCHES: ", "mode, name, hashString")
 	file_bytes := []byte(file_content)
 	previousIndex, currentIndex := 0, 0
 
