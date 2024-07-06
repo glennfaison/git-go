@@ -14,8 +14,8 @@ func CommandHandler_LsTree(args []string) {
 	args = flag.Args()
 	tree_sha := args[0]
 
-	fmt.Printf("\"GOT FILE CONTENT!\": %v\n", "GOT FILE CONTENT!")
 	file_content, err := pkg.ReadObjectFile(tree_sha)
+	fmt.Printf("\"GOT FILE CONTENT!\": %v\n", "GOT FILE CONTENT!")
 	pkg.CheckError(err)
 
 	entries := pkg.ParseTreeObjectFromString(file_content)
