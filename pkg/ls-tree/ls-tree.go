@@ -18,7 +18,7 @@ func CommandHandler_LsTree(args []string) {
 	pkg.CheckError(err)
 
 	entries := pkg.ParseTreeObjectFromString(file_content)
-	fmt.Printf("\"GOT FILE CONTENT!\": %v\n", file_content)
+	fmt.Printf("\"GOT FILE CONTENT!\": %v\n", entries)
 
 	if nameOnly != nil {
 		outputString := ""
