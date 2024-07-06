@@ -19,6 +19,13 @@ const DOT_GIT_OBJECTS = ".git/objects"
 const DOT_GIT_REFS = ".git/refs"
 const DOT_GIT_HEAD = ".git/HEAD"
 
+type TreeObjectEntry struct {
+	Mode         string
+	Name         string
+	ShaAs20Bytes string
+	Type         string
+}
+
 func CheckError(err error) {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
@@ -151,13 +158,6 @@ func ParseTreeObjectFromString(file_content string) []TreeObjectEntry {
 		entries = append(entries, TreeObjectEntry{Mode: mode, Type: objectType, Name: name, ShaAs20Bytes: hashString})
 	}
 	return entries
-}
-
-type TreeObjectEntry struct {
-	Mode         string
-	Name         string
-	ShaAs20Bytes string
-	Type         string
 }
 
 func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []byte, error) {
