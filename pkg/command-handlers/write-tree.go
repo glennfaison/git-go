@@ -7,7 +7,7 @@ import (
 	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
-func CommandHandler_WriteTree(args []string) error {
+func WriteTree(args []string) error {
 	dir := "./"
 	writeToFile := true
 

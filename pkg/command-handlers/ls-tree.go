@@ -7,7 +7,7 @@ import (
 	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
-func CommandHandler_LsTree(args []string) {
+func LsTree(args []string) {
 	flag := flag.NewFlagSet("git ls-tree", flag.ExitOnError)
 	nameOnly := flag.Bool("name-only", false, "prints only the file and folder names")
 	flag.Parse(args)

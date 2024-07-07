@@ -19,7 +19,7 @@ func PrintCmd(blob_sha string) {
 	fmt.Print(blob_string)
 }
 
-func CommandHandler_CatFile(args []string) {
+func CatFile(args []string) {
 	flag := flag.NewFlagSet("mygit cat-file", flag.ExitOnError)
 	blob_path := flag.String("p", "", "name of the blob file")
 	flag.Parse(args)

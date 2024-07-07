@@ -7,7 +7,7 @@ import (
 	"github.com/codecrafters-io/git-starter-go/pkg"
 )
 
-func CommandHandler_HashObject(args []string) error {
+func HashObject(args []string) error {
 	flag := flag.NewFlagSet("mygit hash-object", flag.ExitOnError)
 	write := flag.Bool("w", false, "creates a git object for the file in .git/objects")
 	flag.Parse(args)

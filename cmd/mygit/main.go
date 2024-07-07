@@ -21,17 +21,17 @@ func main() {
 
 	switch command {
 	case "init":
-		command_handlers.CommandHandler_Init(newArgs)
+		command_handlers.Init(newArgs)
 	case "cat-file":
-		command_handlers.CommandHandler_CatFile(newArgs)
+		command_handlers.CatFile(newArgs)
 	case "hash-object":
-		command_handlers.CommandHandler_HashObject(newArgs)
+		command_handlers.HashObject(newArgs)
 	case "ls-tree":
-		command_handlers.CommandHandler_LsTree(newArgs)
+		command_handlers.LsTree(newArgs)
 	case "write-tree":
-		command_handlers.CommandHandler_WriteTree(newArgs)
+		command_handlers.WriteTree(newArgs)
 	case "commit-tree":
-		command_handlers.CommandHandler_CommitTree(newArgs)
+		command_handlers.CommitTree(newArgs)
 	default:
 		fmt.Fprintf(os.Stderr, "Unknown command %s\n", command)
 		os.Exit(1)

@@ -8,7 +8,7 @@ import (
 	pkg "github.com/codecrafters-io/git-starter-go/pkg"
 )
 
-func CommandHandler_Init(args []string) {
+func Init(args []string) {
 	basePath := "."
 	if len(args) > 0 {
 		basePath = args[0]
