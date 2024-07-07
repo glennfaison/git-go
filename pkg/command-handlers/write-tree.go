@@ -1,6 +1,7 @@
 package command_handlers
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/codecrafters-io/git-starter-go/pkg"
@@ -10,11 +11,19 @@ func CommandHandler_WriteTree(args []string) error {
 	dir := "./"
 	writeToFile := true
 
-	checksum, _, err := pkg.ComputeTreeObjectForDirectory(dir, writeToFile)
+	flag := flag.NewFlagSet("mygit write-tree", flag.ExitOnError)
+	prefix := flag.String("prefix", "", "write tree object for a subdirectory <prefix>")
+	flag.Parse(args)
+
+	if prefix != nil && *prefix != "" {
+		dir = *prefix
+	}
+	checksum, content, err := pkg.ComputeTreeObjectForDirectory(dir, writeToFile)
 	if err != nil {
 		return err
 	}
 
-	fmt.Printf("%x", checksum)
+	pkg.WriteObjectFile(fmt.Sprintf("%x", checksum), content)
+	fmt.Printf("%x\n", checksum)
 	return nil
 }

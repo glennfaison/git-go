@@ -179,10 +179,10 @@ func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []by
 		var err error
 		var item TreeObjectEntry = TreeObjectEntry{}
 		if dirEntry.IsDir() {
-			item = TreeObjectEntry{Mode: "040000", Type: "tree", Name: dirEntry.Name(), ShaAs20Bytes: string(checksum[:])}
+			item = TreeObjectEntry{Mode: "40000", Type: "tree"}
 			checksum, content, err = ComputeTreeObjectForDirectory(filename, writeToFile)
 		} else {
-			item = TreeObjectEntry{Mode: "100644", Type: "blob", Name: dirEntry.Name(), ShaAs20Bytes: string(checksum[:])}
+			item = TreeObjectEntry{Mode: "100644", Type: "blob"}
 			checksum, content, err = ComputeBlobObjectForFile(filename)
 		}
 		if err != nil {
@@ -200,6 +200,7 @@ func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []by
 	sort.Slice(treeObjEntries, func(i, j int) bool {
 		return treeObjEntries[i].Name < treeObjEntries[j].Name
 	})
+
 	body := []byte{}
 	for _, treeObjEntry := range treeObjEntries {
 		entryTemplate := fmt.Sprintf("%s %s\x00%s", treeObjEntry.Mode, treeObjEntry.Name, treeObjEntry.ShaAs20Bytes)
