@@ -16,7 +16,7 @@ func PrintCmd(blob_sha string) {
 	if nullByteIndex != -1 {
 		blob_string = blob_string[nullByteIndex+1:]
 	}
-	fmt.Print(blob_string, "\n")
+	fmt.Println(blob_string)
 }
 
 func CatFile(args []string) {
