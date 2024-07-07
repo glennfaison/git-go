@@ -234,7 +234,7 @@ func ComputeCommitObject(treeObjectSha string, parentSha string, message string)
 	parentLine := fmt.Sprintf("parent %s\n", parentSha)
 	authorLine := fmt.Sprintf("author %s <%s> %d %s\n", userName, userEmail, now.Unix(), offsetString)
 	committerLine := fmt.Sprintf("committer %s <%s> %d %s\n", committerName, committerEmail, now.Unix(), offsetString)
-	messageLine := fmt.Sprintf("\n%s", message)
+	messageLine := fmt.Sprintf("\n%s\n", message)
 
 	bodyString := treeLine
 	if parentSha != "" {
