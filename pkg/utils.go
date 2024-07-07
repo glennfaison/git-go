@@ -12,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const DOT_GIT = ".git"
@@ -213,4 +214,26 @@ func ComputeTreeObjectForDirectory(dir string, writeToFile bool) ([20]byte, []by
 	checksum := sha1.Sum(body)
 
 	return checksum, body, nil
+}
+
+func ComputeCommitObject(treeObjectSha string, parentShas []string, message string) ([20]byte, []byte, error) {
+	userName := "Anonymous Developer"
+	userEmail := "anonymous@example.com"
+	committerName := "Anonymous Developer"
+	committerEmail := "anonymous@example.com"
+
+	bodyString := fmt.Sprintf(
+		"tree %s\nparent %s\nauthor %s <%s> %d %s\ncommitter %s <%s> %d %s\n\n%s",
+		treeObjectSha, parentShas[0],
+		userName, userEmail, time.Now().Unix(), time.Now().Format(time.RFC3339),
+		committerName, committerEmail, time.Now().Unix(), time.Now().Format(time.RFC3339), message,
+	)
+	body := []byte(bodyString)
+	header := fmt.Sprintf("commit %d\x00", len(body))
+
+	content := []byte(header)
+	content = append(content, []byte(body)...)
+	checksum := sha1.Sum(content)
+
+	return checksum, content, nil
 }
